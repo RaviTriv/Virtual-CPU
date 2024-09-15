@@ -1,4 +1,3 @@
-#include <iostream>
 #include "../include/cpu.h"
 
 void CPU::resetCPU()
@@ -18,6 +17,12 @@ CPU::CPU()
 }
 
 CPU::~CPU() {}
+
+void CPU::error()
+{
+  printf("ERROR\n");
+  exit(0);
+}
 
 void CPU::load1(const vector<byte> &program)
 {
@@ -59,16 +64,40 @@ void CPU::store1(vector<byte> &program)
   PC++;
 }
 
-void CPU::runCPU()
+void CPU::store2(vector<byte> &program)
+{
+  program[PC] = register2;
+  PC++;
+}
+
+void CPU::runCPU(vector<byte> &program)
 {
   resetCPU();
   while (PC < MAX)
   {
     switch (IR)
     {
-      if (1)
-      {
-      }
+    case 1:
+      load1(program);
+      break;
+    case 2:
+      load2(program);
+      break;
+    case 3:
+      add();
+      break;
+    case 4:
+      sub();
+      break;
+    case 5:
+      store1(program);
+      break;
+    case 6:
+      store2(program);
+      break;
+    default:
+      error();
+      break;
     }
   }
 }
