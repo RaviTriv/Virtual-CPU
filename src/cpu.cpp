@@ -44,7 +44,7 @@ void CPU::add()
     overflow = true;
     register3 = MAX;
   }
-  printf("RESULT: %c", register3);
+  printf("RESULT: %d\n", register3);
   register1 = register3;
 }
 
