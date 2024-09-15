@@ -24,13 +24,13 @@ void CPU::error()
   exit(0);
 }
 
-void CPU::load1(const vector<byte> &program)
+void CPU::load1(const vector<BYTE> &program)
 {
   register1 = program[PC];
   PC++;
 }
 
-void CPU::load2(const vector<byte> &program)
+void CPU::load2(const vector<BYTE> &program)
 {
   register2 = program[PC];
   PC++;
@@ -44,6 +44,7 @@ void CPU::add()
     overflow = true;
     register3 = MAX;
   }
+  printf("RESULT: %c", register3);
   register1 = register3;
 }
 
@@ -58,23 +59,25 @@ void CPU::sub()
   register1 = register3;
 }
 
-void CPU::store1(vector<byte> &program)
+void CPU::store1(vector<BYTE> &program)
 {
   program[PC] = register1;
   PC++;
 }
 
-void CPU::store2(vector<byte> &program)
+void CPU::store2(vector<BYTE> &program)
 {
   program[PC] = register2;
   PC++;
 }
 
-void CPU::runCPU(vector<byte> &program)
+void CPU::runCPU(vector<BYTE> &program)
 {
   resetCPU();
   while (PC < MAX)
   {
+    IR = program[PC];
+    PC++;
     switch (IR)
     {
     case 1:

@@ -5,27 +5,27 @@ using namespace std;
 
 class CPU
 {
-  typedef unsigned char byte;
+  typedef unsigned char BYTE;
 
 public:
-  static const byte MAX = 255;
+  static const BYTE MAX = 255;
   CPU();
-  void runCPU(vector<byte> &program);
+  void runCPU(vector<BYTE> &program);
   void resetCPU();
 
 private:
-  byte PC;
-  byte IR;
-  byte register1;
-  byte register2;
-  byte register3;
+  BYTE PC;
+  BYTE IR;
+  BYTE register1;
+  BYTE register2;
+  BYTE register3;
   bool overflow;
   bool underflow;
   void error();
-  void load1(const vector<byte> &program);
-  void load2(const vector<byte> &program);
+  void load1(const vector<BYTE> &program);
+  void load2(const vector<BYTE> &program);
   void add();
   void sub();
-  void store1(vector<byte> &program);
-  void store2(vector<byte> &program);
+  void store1(vector<BYTE> &program);
+  void store2(vector<BYTE> &program);
 };
