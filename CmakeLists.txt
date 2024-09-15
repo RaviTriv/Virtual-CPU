@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.5)
+
+project(Virtual_CPU)
+
+message(STATUS ${CMAKE_SOURCE_DIR})
+
+set(SOURCES
+  src/main.cpp
+  src/cpu.cpp
+)
+
+add_executable(cpu ${SOURCES})

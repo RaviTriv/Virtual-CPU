@@ -10,6 +10,7 @@ class CPU
 public:
   static const BYTE MAX = 255;
   CPU();
+  ~CPU();
   void runCPU(vector<BYTE> &program);
   void resetCPU();
 
