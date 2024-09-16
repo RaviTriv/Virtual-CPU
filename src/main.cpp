@@ -1,4 +1,6 @@
 #include "../include/cpu.h"
+#include "../include/memory.h"
+
 typedef unsigned char BYTE;
 
 int main()

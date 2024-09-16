@@ -7,6 +7,7 @@ message(STATUS ${CMAKE_SOURCE_DIR})
 set(SOURCES
   src/main.cpp
   src/cpu.cpp
+  src/memory.cpp
 )
 
 add_executable(cpu ${SOURCES})
