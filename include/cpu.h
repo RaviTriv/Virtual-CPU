@@ -7,16 +7,19 @@ using namespace std;
 class CPU
 {
   typedef unsigned char BYTE;
-  Memory* program = nullptr;
+  Memory *program = 0;
 
 public:
   static const BYTE MAX = 255;
-  CPU(Memory* p);
+  CPU(Memory *p);
   ~CPU();
   void runCPU();
   void resetCPU();
 
 private:
+  BYTE reservedAddress;
+  BYTE baseAddress;
+  BYTE addressLimit;
   BYTE PC;
   BYTE IR;
   BYTE register1;
@@ -29,8 +32,8 @@ private:
   void decode(BYTE opcode);
 
   void error();
-  void load1(Memory* program);
-  void load2(Memory* program);
+  void load1(Memory *program);
+  void load2(Memory *program);
   void add();
   void sub();
   void store1(Memory *program);

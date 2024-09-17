@@ -2,7 +2,10 @@
 
 void CPU::resetCPU()
 {
-  PC = 0;
+  reservedAddress = 0;
+  baseAddress = 1;
+  addressLimit = MAX - 2;
+  PC = baseAddress;
   IR = 0;
   register1 = 0;
   register2 = 0;
@@ -21,11 +24,12 @@ CPU::~CPU() {}
 
 void CPU::error()
 {
+  halt = true;
   printf("ERROR\n");
   exit(0);
 }
 
-void CPU::load1(Memory* program)
+void CPU::load1(Memory *program)
 {
   register1 = program->read(PC);
   PC++;
@@ -60,7 +64,7 @@ void CPU::sub()
   register1 = register3;
 }
 
-void CPU::store1(Memory* program)
+void CPU::store1(Memory *program)
 {
   program->write(PC, register1);
   PC++;
@@ -76,11 +80,19 @@ const CPU::BYTE &CPU::fetch()
 {
   IR = program->read(PC);
   PC++;
+  if (PC > addressLimit)
+  {
+    halt = true;
+  }
   return IR;
 }
 
 void CPU::decode(const BYTE opcode)
 {
+  if (halt)
+  {
+    return;
+  }
   switch (opcode)
   {
   case 1:
@@ -102,7 +114,6 @@ void CPU::decode(const BYTE opcode)
     store2(program);
     break;
   default:
-    halt = true;
     error();
     break;
   }
@@ -113,6 +124,7 @@ void CPU::runCPU()
   resetCPU();
   while (!halt)
   {
-    decode(fetch());
+    program->write(reservedAddress, fetch());
+    decode(program->read(reservedAddress));
   }
 }
