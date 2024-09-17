@@ -1,18 +1,20 @@
 #include "../include/cpu.h"
-#include "../include/memory.h"
+//#include "../include/memory.h"
 
 typedef unsigned char BYTE;
 
 int main()
 {
-  CPU cpu;
-  vector<BYTE> program;
-  program.push_back(1);
-  program.push_back(21);
-  program.push_back(2);
-  program.push_back(21);
-  program.push_back(3);
-  cpu.runCPU(program);
+  Memory program;
+  program.write(0, 1);
+  program.write(1, 21);
+  program.write(2, 2);
+  program.write(3, 21);
+  program.write(4, 3);
+
+  Memory* p = &program;
+  CPU cpu(p);
+  cpu.runCPU();
 
   return 0;
 }

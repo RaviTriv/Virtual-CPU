@@ -9,11 +9,12 @@ void CPU::resetCPU()
   register3 = 0;
   overflow = false;
   underflow = false;
+  halt = false;
 }
-
-CPU::CPU()
+CPU::CPU(Memory *p)
 {
   resetCPU();
+  program = p;
 }
 
 CPU::~CPU() {}
@@ -24,15 +25,15 @@ void CPU::error()
   exit(0);
 }
 
-void CPU::load1(const vector<BYTE> &program)
+void CPU::load1(Memory* program)
 {
-  register1 = program[PC];
+  register1 = program->read(PC);
   PC++;
 }
 
-void CPU::load2(const vector<BYTE> &program)
+void CPU::load2(Memory *program)
 {
-  register2 = program[PC];
+  register2 = program->read(PC);
   PC++;
 }
 
@@ -59,48 +60,59 @@ void CPU::sub()
   register1 = register3;
 }
 
-void CPU::store1(vector<BYTE> &program)
+void CPU::store1(Memory* program)
 {
-  program[PC] = register1;
+  program->write(PC, register1);
   PC++;
 }
 
-void CPU::store2(vector<BYTE> &program)
+void CPU::store2(Memory *program)
 {
-  program[PC] = register2;
+  program->write(PC, register2);
   PC++;
 }
 
-void CPU::runCPU(vector<BYTE> &program)
+const CPU::BYTE &CPU::fetch()
+{
+  IR = program->read(PC);
+  PC++;
+  return IR;
+}
+
+void CPU::decode(const BYTE opcode)
+{
+  switch (opcode)
+  {
+  case 1:
+    load1(program);
+    break;
+  case 2:
+    load2(program);
+    break;
+  case 3:
+    add();
+    break;
+  case 4:
+    sub();
+    break;
+  case 5:
+    store1(program);
+    break;
+  case 6:
+    store2(program);
+    break;
+  default:
+    halt = true;
+    error();
+    break;
+  }
+}
+
+void CPU::runCPU()
 {
   resetCPU();
-  while (PC < MAX)
+  while (!halt)
   {
-    IR = program[PC];
-    PC++;
-    switch (IR)
-    {
-    case 1:
-      load1(program);
-      break;
-    case 2:
-      load2(program);
-      break;
-    case 3:
-      add();
-      break;
-    case 4:
-      sub();
-      break;
-    case 5:
-      store1(program);
-      break;
-    case 6:
-      store2(program);
-      break;
-    default:
-      error();
-      break;
-    }
+    decode(fetch());
   }
 }

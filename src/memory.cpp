@@ -7,10 +7,10 @@ Memory::Memory()
 
 Memory::~Memory()
 {
-  if (memorySpace != nullptr)
+  if (memorySpace != 0)
   {
     delete[] memorySpace;
-    memorySpace = nullptr;
+    memorySpace = 0;
   }
 }
 
