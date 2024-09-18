@@ -36,6 +36,7 @@ private:
   void load2(Memory *program);
   void add();
   void sub();
+  void store();
   void store1(Memory *program);
   void store2(Memory *program);
 };

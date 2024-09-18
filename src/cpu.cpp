@@ -64,6 +64,13 @@ void CPU::sub()
   register1 = register3;
 }
 
+void CPU::store()
+{
+  register2 = program->read(PC);
+  PC++;
+  program->write(register2, register1);
+}
+
 void CPU::store1(Memory *program)
 {
   program->write(PC, register1);
