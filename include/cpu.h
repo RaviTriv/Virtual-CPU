@@ -39,8 +39,10 @@ private:
 
   void add();
   void addi1();
+  void addi2();
   void sub();
   void subi1();
+  void subi2();
 
   void store0();
   void store();

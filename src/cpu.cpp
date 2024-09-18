@@ -59,6 +59,11 @@ void CPU::addi1()
   register1 = register1 + 1;
 }
 
+void CPU::addi2()
+{
+  register2 = register2 + 1;
+}
+
 void CPU::sub()
 {
   register3 = register2 - register1;
@@ -73,6 +78,11 @@ void CPU::sub()
 void CPU::subi1()
 {
   register1 = register1 - 1;
+}
+
+void CPU::subi2()
+{
+  register2 = register2 - 1;
 }
 
 void CPU::store()
