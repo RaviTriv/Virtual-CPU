@@ -54,6 +54,11 @@ void CPU::add()
   register1 = register3;
 }
 
+void CPU::addi1()
+{
+  register1 = register1 + 1;
+}
+
 void CPU::sub()
 {
   register3 = register2 - register1;
@@ -65,11 +70,22 @@ void CPU::sub()
   register1 = register3;
 }
 
+void CPU::subi1()
+{
+  register1 = register1 - 1;
+}
+
 void CPU::store()
 {
   register2 = program->read(PC);
   PC++;
   program->write(register2, register1);
+}
+
+void CPU::store0()
+{
+  program->write(0, register1);
+  PC++;
 }
 
 void CPU::store1()
@@ -92,13 +108,24 @@ void CPU::printSomething()
 void CPU::jump()
 {
   program->write(jumpAddress, program->read(PC));
-  PC++;
   PC = program->read(jumpAddress);
 }
 
 void CPU::jumpEqual()
 {
   if (register1 == register2)
+  {
+    jump();
+  }
+  else
+  {
+    PC++;
+  }
+}
+
+void CPU::jumpNotEqual()
+{
+  if (register1 != register2)
   {
     jump();
   }
@@ -153,6 +180,15 @@ void CPU::decode(const BYTE opcode)
     break;
   case 9:
     printSomething();
+    break;
+  case 10:
+    store0();
+    break;
+  case 11:
+    jumpNotEqual();
+    break;
+  case 12:
+    subi1();
     break;
   default:
     error();

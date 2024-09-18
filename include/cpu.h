@@ -38,7 +38,11 @@ private:
   void load2();
 
   void add();
+  void addi1();
   void sub();
+  void subi1();
+
+  void store0();
   void store();
   void store1();
   void store2();
@@ -47,4 +51,6 @@ private:
   // JUMP INSTRUCTIONS
   void jump();
   void jumpEqual();
+  void jumpNotEqual();
+
 };
