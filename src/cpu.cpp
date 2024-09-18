@@ -205,7 +205,7 @@ void CPU::decode(const BYTE opcode)
     break;
   }
 }
-// load 1 into register 1, load 1 into register 2, jumpIfEqual, jump to print statement, keep printinm
+
 void CPU::runCPU()
 {
   resetCPU();
