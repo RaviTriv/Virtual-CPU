@@ -20,6 +20,7 @@ private:
   BYTE reservedAddress;
   BYTE baseAddress;
   BYTE addressLimit;
+  BYTE jumpAddress;
   BYTE PC;
   BYTE IR;
   BYTE register1;
@@ -32,11 +33,18 @@ private:
   void decode(BYTE opcode);
 
   void error();
-  void load1(Memory *program);
-  void load2(Memory *program);
+
+  void load1();
+  void load2();
+
   void add();
   void sub();
   void store();
-  void store1(Memory *program);
-  void store2(Memory *program);
+  void store1();
+  void store2();
+  void printSomething();
+
+  // JUMP INSTRUCTIONS
+  void jump();
+  void jumpEqual();
 };

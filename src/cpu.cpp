@@ -3,7 +3,8 @@
 void CPU::resetCPU()
 {
   reservedAddress = 0;
-  baseAddress = 1;
+  jumpAddress = 1;
+  baseAddress = 2;
   addressLimit = MAX - 2;
   PC = baseAddress;
   IR = 0;
@@ -14,6 +15,7 @@ void CPU::resetCPU()
   underflow = false;
   halt = false;
 }
+
 CPU::CPU(Memory *p)
 {
   resetCPU();
@@ -29,13 +31,13 @@ void CPU::error()
   exit(0);
 }
 
-void CPU::load1(Memory *program)
+void CPU::load1()
 {
   register1 = program->read(PC);
   PC++;
 }
 
-void CPU::load2(Memory *program)
+void CPU::load2()
 {
   register2 = program->read(PC);
   PC++;
@@ -49,7 +51,6 @@ void CPU::add()
     overflow = true;
     register3 = MAX;
   }
-  printf("RESULT: %d\n", register3);
   register1 = register3;
 }
 
@@ -71,16 +72,40 @@ void CPU::store()
   program->write(register2, register1);
 }
 
-void CPU::store1(Memory *program)
+void CPU::store1()
 {
   program->write(PC, register1);
   PC++;
 }
 
-void CPU::store2(Memory *program)
+void CPU::store2()
 {
   program->write(PC, register2);
   PC++;
+}
+
+void CPU::printSomething()
+{
+  printf("JUMPED TO 15\n");
+}
+
+void CPU::jump()
+{
+  program->write(jumpAddress, program->read(PC));
+  PC++;
+  PC = program->read(jumpAddress);
+}
+
+void CPU::jumpEqual()
+{
+  if (register1 == register2)
+  {
+    jump();
+  }
+  else
+  {
+    PC++;
+  }
 }
 
 const CPU::BYTE &CPU::fetch()
@@ -103,10 +128,10 @@ void CPU::decode(const BYTE opcode)
   switch (opcode)
   {
   case 1:
-    load1(program);
+    load1();
     break;
   case 2:
-    load2(program);
+    load2();
     break;
   case 3:
     add();
@@ -115,17 +140,26 @@ void CPU::decode(const BYTE opcode)
     sub();
     break;
   case 5:
-    store1(program);
+    store1();
     break;
   case 6:
-    store2(program);
+    store2();
+    break;
+  case 7:
+    jump();
+    break;
+  case 8:
+    jumpEqual();
+    break;
+  case 9:
+    printSomething();
     break;
   default:
     error();
     break;
   }
 }
-
+// load 1 into register 1, load 1 into register 2, jumpIfEqual, jump to print statement, keep printinm
 void CPU::runCPU()
 {
   resetCPU();
