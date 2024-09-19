@@ -26,7 +26,7 @@ int main()
  // program.write(9, 7);
 
   // Print once finished the loop
-  program.write(10, 9);
+  program.write(8, 9);
 
   Memory *p = &program;
   CPU cpu(p);

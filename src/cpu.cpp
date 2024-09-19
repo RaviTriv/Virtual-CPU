@@ -78,6 +78,7 @@ void CPU::sub()
 void CPU::subi1()
 {
   register1 = register1 - 1;
+  printf("SUBTRACTING\n");
 }
 
 void CPU::subi2()
@@ -112,7 +113,7 @@ void CPU::store2()
 
 void CPU::printSomething()
 {
-  printf("JUMPED TO 15\n");
+  printf("PRINTED SOMETHING\n");
 }
 
 void CPU::jump()

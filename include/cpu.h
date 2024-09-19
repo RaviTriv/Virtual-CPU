@@ -50,7 +50,6 @@ private:
   void store2();
   void printSomething();
 
-  // JUMP INSTRUCTIONS
   void jump();
   void jumpEqual();
   void jumpNotEqual();
