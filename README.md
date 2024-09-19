@@ -30,7 +30,7 @@ A few important `opcodes` are listed in the table below
 ## Sample Program
 
 This sample program runs a loop and prints once the loop is completed.
-```
+```c++
   Memory program;
 
   // Load 15 to register 1
